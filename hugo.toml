@@ -1,0 +1,7 @@
+baseURL = 'https://budsx.github.io/'
+languageCode = 'en-us'
+title = 'Engineering Blog'
+theme = 'hextra'
+
+[params]
+  author = 'Budi Setiawan'
