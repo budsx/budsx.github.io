@@ -9,6 +9,17 @@ markup:
     renderer:
       unsafe: true
 
+params:
+  navbar:
+    displayTitle: true
+    displayLogo: true
+    logo:
+      path: images/logo.svg
+      dark: images/logo-dark.svg
+      link: /
+      width: 20
+      height: 20
+
 menu:
   main:
     - identifier: blog
