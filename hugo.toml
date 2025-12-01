@@ -3,5 +3,12 @@ languageCode = 'en-us'
 title = 'Engineering Blog'
 theme = 'hextra'
 
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    noClasses = false
+
 [params]
   author = 'Budi Setiawan'

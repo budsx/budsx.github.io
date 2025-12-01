@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about RESTful API design principles and best practices">
+    <title>API Design Best Practices - Backend Engineer Blog</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <a href="../index.html">Backend Engineer Blog</a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../index.html#about">About</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <article class="blog-post">
+            <div class="container">
+                <a href="../index.html" class="back-link">← Back to Home</a>
+                
+                <div class="blog-post-header">
+                    <h1>API Design Best Practices</h1>
+                    <div class="meta">Published on January 10, 2024</div>
+                </div>
+
+                <div class="blog-post-content">
+                    <p>Designing a well-structured API is crucial for building maintainable and scalable applications. This article covers essential best practices for API design.</p>
+
+                    <h2>RESTful Principles</h2>
+                    <p>REST (Representational State Transfer) is a popular architectural style for designing web services. Key principles include:</p>
+                    <ul>
+                        <li>Use HTTP methods appropriately (GET, POST, PUT, DELETE)</li>
+                        <li>Stateless communication</li>
+                        <li>Resource-based URLs</li>
+                        <li>Proper HTTP status codes</li>
+                    </ul>
+
+                    <h2>URL Design</h2>
+                    <p>Good URL design makes your API intuitive and easy to use:</p>
+                    <pre><code>// Good
+GET /api/v1/users
+GET /api/v1/users/123
+POST /api/v1/users
+
+// Bad
+GET /api/getUsers
+GET /api/user?id=123
+POST /api/createUser</code></pre>
+
+                    <h2>Versioning</h2>
+                    <p>API versioning is essential for maintaining backward compatibility:</p>
+                    <ul>
+                        <li>Use URL versioning: <code>/api/v1/users</code></li>
+                        <li>Or header versioning: <code>Accept: application/vnd.api+json;version=1</code></li>
+                        <li>Always version your APIs from the start</li>
+                    </ul>
+
+                    <h2>Error Handling</h2>
+                    <p>Consistent error responses help clients handle errors gracefully:</p>
+                    <pre><code>{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Invalid input parameters",
+    "details": {
+      "email": "Invalid email format"
+    }
+  }
+}</code></pre>
+
+                    <h2>Pagination</h2>
+                    <p>For endpoints that return lists, implement pagination:</p>
+                    <pre><code>GET /api/v1/users?page=1&limit=20
+
+{
+  "data": [...],
+  "pagination": {
+    "page": 1,
+    "limit": 20,
+    "total": 100,
+    "totalPages": 5
+  }
+}</code></pre>
+
+                    <h2>Conclusion</h2>
+                    <p>Following these best practices will help you create APIs that are easy to use, maintain, and scale. Remember to document your APIs thoroughly and consider your consumers' needs.</p>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Backend Engineer Blog. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
+
