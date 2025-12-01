@@ -1,0 +1,17 @@
+baseURL: "https://budsx.github.io/"
+title: "Engineering Blog"
+theme: "hextra"
+languageCode: "en-us"
+
+markup:
+  defaultMarkdownHandler: goldmark
+  goldmark:
+    renderer:
+      unsafe: true
+
+menu:
+  main:
+    - identifier: blog
+      name: Blog
+      pageRef: /blog
+      weight: 1
