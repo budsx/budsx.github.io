@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Budi Setiawan — Backend Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --card: #16161f;
+    --border: #1e1e2e;
+    --accent: #00e5ff;
+    --accent2: #7c3aed;
+    --accent3: #10b981;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --dim: #334155;
+    --mono: 'DM Mono', monospace;
+    --sans: 'Syne', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Glow orbs */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.15;
+  }
+  .orb-1 { width: 600px; height: 600px; background: var(--accent2); top: -200px; left: -200px; animation: drift1 20s ease-in-out infinite; }
+  .orb-2 { width: 400px; height: 400px; background: var(--accent); bottom: 10%; right: -100px; animation: drift2 25s ease-in-out infinite; }
+  .orb-3 { width: 300px; height: 300px; background: var(--accent3); top: 40%; left: 30%; animation: drift3 18s ease-in-out infinite; }
+
+  @keyframes drift1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(60px,40px)} }
+  @keyframes drift2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-40px,-60px)} }
+  @keyframes drift3 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(30px,-30px)} }
+
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 24px 100px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    margin-bottom: 80px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: 1px solid rgba(0,229,255,0.3);
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .hero-tag::before {
+    content: '▶ ';
+    opacity: 0.6;
+  }
+
+  .hero h1 {
+    font-family: var(--sans);
+    font-size: clamp(48px, 8vw, 88px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 .line1 { display: block; color: var(--text); }
+  .hero h1 .line2 {
+    display: block;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-summary {
+    max-width: 600px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 32px;
+  }
+
+  .hero-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .contact-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    transition: all 0.2s;
+  }
+  .contact-pill:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .contact-pill .icon { font-size: 14px; }
+
+  /* ── SECTION ── */
+  section {
+    margin-bottom: 64px;
+    animation: fadeUp 0.8s ease both;
+  }
+  section:nth-child(2) { animation-delay: 0.1s; }
+  section:nth-child(3) { animation-delay: 0.2s; }
+  section:nth-child(4) { animation-delay: 0.3s; }
+  section:nth-child(5) { animation-delay: 0.4s; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+
+  .section-title {
+    font-family: var(--sans);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  /* ── JOB CARD ── */
+  .job {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .job:hover {
+    border-color: rgba(0,229,255,0.25);
+    transform: translateY(-2px);
+  }
+  .job::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: linear-gradient(180deg, var(--accent), var(--accent2));
+    border-radius: 8px 0 0 8px;
+  }
+
+  .job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .job-company {
+    font-family: var(--sans);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .job-date {
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(0,229,255,0.08);
+    border: 1px solid rgba(0,229,255,0.2);
+    padding: 3px 10px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .job-role {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .job-location {
+    font-size: 11px;
+    color: var(--dim);
+    margin-bottom: 16px;
+  }
+
+  .job-desc {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    line-height: 1.7;
+  }
+
+  .achievements {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .achievements li {
+    font-size: 12.5px;
+    color: #94a3b8;
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.6;
+  }
+  .achievements li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent3);
+    font-size: 11px;
+  }
+
+  /* Key Projects */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .project-chip {
+    background: rgba(124,58,237,0.08);
+    border: 1px solid rgba(124,58,237,0.2);
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-size: 11.5px;
+    color: #a78bfa;
+  }
+  .project-chip strong {
+    display: block;
+    color: #c4b5fd;
+    font-weight: 500;
+    margin-bottom: 2px;
+    font-size: 12px;
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .skill-group {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    transition: border-color 0.2s;
+  }
+  .skill-group:hover { border-color: rgba(0,229,255,0.2); }
+
+  .skill-category {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .skill-tag {
+    font-size: 11px;
+    color: #94a3b8;
+    background: rgba(255,255,255,0.04);
+    padding: 3px 8px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+  }
+
+  /* ── EDUCATION ── */
+  .edu-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    transition: border-color 0.2s;
+  }
+  .edu-card:hover { border-color: rgba(0,229,255,0.2); }
+
+  .edu-school {
+    font-family: var(--sans);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .edu-degree { font-size: 12px; color: var(--muted); }
+  .edu-date {
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(0,229,255,0.08);
+    border: 1px solid rgba(0,229,255,0.2);
+    padding: 4px 12px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  /* ── CERTS ── */
+  .certs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cert-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 13px;
+    color: var(--muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .cert-item:hover { border-color: rgba(16,185,129,0.3); color: var(--text); }
+  .cert-icon {
+    width: 32px; height: 32px;
+    background: rgba(16,185,129,0.1);
+    border: 1px solid rgba(16,185,129,0.2);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .cert-org {
+    font-size: 10px;
+    color: var(--accent3);
+    margin-top: 2px;
+  }
+
+  /* Footer */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 32px 24px;
+    font-size: 11px;
+    color: var(--dim);
+    border-top: 1px solid var(--border);
+    letter-spacing: 0.1em;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .job-header { flex-direction: column; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<main>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">Backend Engineer · Available</div>
+    <h1>
+      <span class="line1">Budi</span>
+      <span class="line2">Setiawan</span>
+    </h1>
+    <p class="hero-summary">
+      Backend Engineer with 3+ years building reliable, high-performance systems in production. Specializes in microservices with Go and Clean Architecture, RESTful APIs, gRPC, and event-driven architecture. Experienced on GCP and Huawei Cloud with Docker, Kubernetes, and full observability stacks.
+    </p>
+    <div class="hero-links">
+      <a class="contact-pill" href="tel:+6282301302964"><span class="icon">📱</span>+62 823-0130-2964</a>
+      <a class="contact-pill" href="mailto:budiskom99@gmail.com"><span class="icon">✉️</span>budiskom99@gmail.com</a>
+      <a class="contact-pill" href="https://linkedin.com/in/budsx" target="_blank"><span class="icon">🔗</span>linkedin.com/in/budsx</a>
+      <a class="contact-pill" href="https://github.com/budsx" target="_blank"><span class="icon">🐙</span>github.com/budsx</a>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <section>
+    <div class="section-header">
+      <span class="section-label">01</span>
+      <span class="section-title">Work Experience</span>
+      <div class="section-line"></div>
+    </div>
+
+    <!-- BRI -->
+    <div class="job">
+      <div class="job-header">
+        <div class="job-company">PT Bank Rakyat Indonesia (BRI) Tbk</div>
+        <span class="job-date">Sep 2025 – Present</span>
+      </div>
+      <div class="job-role">Backend Developer</div>
+      <div class="job-location">📍 Jakarta, Indonesia</div>
+      <p class="job-desc">Part of the BRI Merchant Team, responsible for managing merchant partner systems including mobile and web applications for transaction and operational management.</p>
+    </div>
+
+    <!-- Blue Bird -->
+    <div class="job">
+      <div class="job-header">
+        <div class="job-company">Blue Bird Group</div>
+        <span class="job-date">Sep 2022 – Aug 2025</span>
+      </div>
+      <div class="job-role">Backend Developer</div>
+      <div class="job-location">📍 Jakarta, Indonesia</div>
+      <p class="job-desc">Part of the Blue Bird Dispatch Team, managing the full taxi order lifecycle across MyBlueBird, partner platforms (Gojek, Traveloka, Grab), street hailing, and web reservations.</p>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section>
+    <div class="section-header">
+      <span class="section-label">02</span>
+      <span class="section-title">Technical Skills</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-category">Languages</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Golang</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">PHP</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-category">API Development</div>
+        <div class="skill-tags">
+          <span class="skill-tag">RESTful API</span>
+          <span class="skill-tag">gRPC</span>
+          <span class="skill-tag">gRPC Gateway</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-category">Frameworks</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Gokit</span>
+          <span class="skill-tag">Fiber</span>
+          <span class="skill-tag">Gin</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-category">Databases</div>
+        <div class="skill-tags">
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">Redis</span>
+          <span class="skill-tag">BigQuery</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-category">Cloud</div>
+        <div class="skill-tags">
+          <span class="skill-tag">GCP</span>
+          <span class="skill-tag">Huawei Cloud</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-category">Containers</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">Kubernetes</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-category">CI/CD</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Jenkins</span>
+          <span class="skill-tag">ArgoCD</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-category">Message Brokers</div>
+        <div class="skill-tags">
+          <span class="skill-tag">RabbitMQ</span>
+          <span class="skill-tag">Pub/Sub</span>
+          <span class="skill-tag">MQTT</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-category">Observability</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Grafana</span>
+          <span class="skill-tag">Kibana</span>
+          <span class="skill-tag">OpenTelemetry</span>
+          <span class="skill-tag">Elastic Stack</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-category">Version Control</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">GitLab</span>
+          <span class="skill-tag">BitBucket</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-category">Project Management</div>
+        <div class="skill-tags">
+          <span class="skill-tag">JIRA</span>
+          <span class="skill-tag">SharePoint</span>
+          <span class="skill-tag">ClickUp</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section>
+    <div class="section-header">
+      <span class="section-label">03</span>
+      <span class="section-title">Education</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="edu-card">
+      <div>
+        <div class="edu-school">Universitas Muhammadiyah Ponorogo</div>
+        <div class="edu-degree">Bachelor of Informatics · Ponorogo, Indonesia</div>
+      </div>
+      <span class="edu-date">Aug 2017 – Oct 2021</span>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section>
+    <div class="section-header">
+      <span class="section-label">04</span>
+      <span class="section-title">Certifications</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="certs-list">
+      <div class="cert-item">
+        <div class="cert-icon">🐧</div>
+        <div>
+          <div>Introduction to Linux (LFS101)</div>
+          <div class="cert-org">Linux Foundation</div>
+        </div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-icon">☸️</div>
+        <div>
+          <div>Introduction to Kubernetes</div>
+          <div class="cert-org">Linux Foundation</div>
+        </div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-icon">⚙️</div>
+        <div>
+          <div>Introduction to DevOps and Site Reliability Engineering (LFS162)</div>
+          <div class="cert-org">Linux Foundation</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 Budi Setiawan &nbsp;·&nbsp; Backend Engineer &nbsp;·&nbsp; Jakarta, Indonesia
+</footer>
+
+</body>
+</html>
